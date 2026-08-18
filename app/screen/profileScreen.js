@@ -19,12 +19,10 @@ export default function ProfileScreen() {
 
   const fetchUserData = async () => {
     try {
-      // 1. Ambil data user yang sedang login
       const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
       if (userError || !currentUser) throw userError;
       setUser(currentUser);
 
-      // 2. Ambil total statistik catatan milik user
       const { count, error: countError } = await supabase
         .from("notes")
         .select("*", { count: "exact", head: true })
@@ -108,7 +106,6 @@ export default function ProfileScreen() {
         </Text>
 
         <View style={{ backgroundColor: "#FFFFFF", borderRadius: 18, borderWidth: 1, borderColor: "#E0EFF8", overflow: "hidden", marginBottom: 24 }}>
-          {/* Email Item */}
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", padding: 16, borderBottomWidth: 1, borderColor: "#F0F4F8" }}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
               <Mail size={20} color="#4A6572" />
