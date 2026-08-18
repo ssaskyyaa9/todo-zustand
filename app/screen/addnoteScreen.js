@@ -6,16 +6,14 @@ import { supabase } from "../../lib/supabase";
 
 export default function AddNoteScreen() {
   const router = useRouter();
-  const { id } = useLocalSearchParams(); // Mengambil ID jika dibuka dari dashboard
+  const { id } = useLocalSearchParams();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  const isEditMode = Boolean(id); // True jika ada ID (mode Edit/Detail)
-
-  // Fetch data catatan jika dalam mode Edit
+  const isEditMode = Boolean(id);
   useEffect(() => {
     if (isEditMode) {
       fetchNoteDetail();
@@ -68,14 +66,12 @@ export default function AddNoteScreen() {
     let error;
 
     if (isEditMode) {
-      // UPDATE catatan yang sudah ada
       const response = await supabase
         .from("notes")
         .update({ title: title.trim(), content: content.trim() })
         .eq("id", id);
       error = response.error;
     } else {
-      // INSERT catatan baru
       const response = await supabase
         .from("notes")
         .insert({ user_id: user.id, title: title.trim(), content: content.trim() });
@@ -96,7 +92,6 @@ export default function AddNoteScreen() {
     );
   }
 
-  // LOKASI FUNGSI HAPUS
   function deleteNote() {
     Alert.alert(
       "Hapus Catatan",
@@ -137,8 +132,6 @@ export default function AddNoteScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#F4FAFF" />
 
       <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled" contentContainerStyle={{ paddingHorizontal: 22, paddingTop: 55, paddingBottom: 40 }}>
-        
-        {/* Header Bar */}
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 28 }}>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <TouchableOpacity activeOpacity={0.7} onPress={() => router.back()} style={{ width: 44, height: 44, borderRadius: 13, backgroundColor: "#FFFFFF", alignItems: "center", justifyContent: "center", borderWidth: 1, borderColor: "#DDEEF8" }}>
@@ -153,7 +146,6 @@ export default function AddNoteScreen() {
             </View>
           </View>
 
-          {/* Tombol Hapus (Hanya muncul jika mode Edit/Detail) */}
           {isEditMode && (
             <TouchableOpacity activeOpacity={0.7} onPress={deleteNote} disabled={saving} style={{ width: 44, height: 44, borderRadius: 13, backgroundColor: "#FFE5E5", alignItems: "center", justifyContent: "center" }}>
               <Trash2 size={21} color="#E53935" strokeWidth={2} />
@@ -161,7 +153,6 @@ export default function AddNoteScreen() {
           )}
         </View>
 
-        {/* Card Info */}
         <View style={{ backgroundColor: "#168CF5", borderRadius: 22, padding: 20, marginBottom: 24, flexDirection: "row", alignItems: "center" }}>
           <View style={{ width: 48, height: 48, borderRadius: 14, backgroundColor: "#FFFFFF", alignItems: "center", justifyContent: "center" }}>
             <FileText size={23} color="#168CF5" strokeWidth={2} />
@@ -175,7 +166,6 @@ export default function AddNoteScreen() {
           </View>
         </View>
 
-        {/* Form Input */}
         <View style={{ backgroundColor: "#FFFFFF", borderRadius: 22, padding: 20, borderWidth: 1, borderColor: "#E0EFF8" }}>
           <Text style={{ fontSize: 14, fontWeight: "700", color: "#31566F", marginBottom: 9 }}> Title </Text>
           <TextInput value={title} onChangeText={setTitle} placeholder="Give your note a title" placeholderTextColor="#91AFC4" autoCapitalize="sentences" style={{ height: 54, backgroundColor: "#F9FDFF", borderWidth: 1, borderColor: "#CDE7F7", borderRadius: 14, paddingHorizontal: 16, fontSize: 15, color: "#12344D", marginBottom: 22 }} />
