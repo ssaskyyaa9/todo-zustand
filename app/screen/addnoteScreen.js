@@ -93,10 +93,7 @@ export default function AddNoteScreen() {
   }
 
   function deleteNote() {
-    Alert.alert(
-      "Hapus Catatan",
-      "Apakah Anda yakin ingin menghapus catatan ini?",
-      [
+    Alert.alert( "Hapus Catatan", "Apakah Anda yakin ingin menghapus catatan ini?", [
         { text: "Batal", style: "cancel" },
         {
           text: "Hapus",

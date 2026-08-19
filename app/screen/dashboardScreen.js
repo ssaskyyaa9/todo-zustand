@@ -153,7 +153,6 @@ export default function DashboardScreen() {
                   </Text>
                 </View>
               </View>
-
               <ChevronRight size={18} color="#A8BDCB" strokeWidth={2} />
             </TouchableOpacity>
           ))
