@@ -3,8 +3,6 @@ import { create } from "zustand";
 export const useNoteStore = create((set) => ({
   notes: [],
   setNotes: (notes) => set({ notes }),
-
-  // Tambahkan item baru ke posisi PALING DEPAN ([newNote, ...state.notes])
   addNote: (newNote) =>
     set((state) => ({
       notes: [newNote, ...state.notes],
